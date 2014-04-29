@@ -3,15 +3,19 @@ package com.epam.springTest.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 import com.epam.springTest.domain.PatientCard;
 
+@Repository("patientCardDao")
 public class PatientCardDaoJDBC implements PatientCardDao {
 
 	private JdbcTemplate jdbcTemplate;
 
+	@Autowired
 	public PatientCardDaoJDBC(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
