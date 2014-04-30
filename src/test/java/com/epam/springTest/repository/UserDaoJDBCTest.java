@@ -10,8 +10,7 @@ import com.epam.springTest.domain.User;
 
 
 public class UserDaoJDBCTest extends DaoTestTemplate {
-	
-	
+		
 	@Autowired
 	private UserDao userDao;
 
@@ -109,5 +108,25 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		boolean result = userDao.update(newUser);
 		
 		assertTrue(result);
+	}
+	
+	@Test
+	public void updateUserWithWrongIdFail() {
+		User user = new User();
+		user.setFirstName("test");
+		user.setLastName("test");
+		user.setPatronymic("test");
+		user.setUserTypeId(1);		
+		userDao.create(user);
+		User newUser = new User();
+		newUser.setFirstName("test1");
+		newUser.setLastName("test1");
+		newUser.setPatronymic("test1");
+		newUser.setUserTypeId(1);
+		newUser.setUserId(2);
+		
+		boolean result = userDao.update(newUser);
+		
+		assertFalse(result);
 	}
 }

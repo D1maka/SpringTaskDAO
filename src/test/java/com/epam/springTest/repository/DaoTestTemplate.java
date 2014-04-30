@@ -11,6 +11,14 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public abstract class DaoTestTemplate {
 
     @Autowired
-    protected JdbcTemplate jdbcTemplate; 
+    protected JdbcTemplate jdbcTemplate;
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	} 
 
 }

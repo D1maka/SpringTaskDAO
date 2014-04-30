@@ -3,19 +3,16 @@ package com.epam.springTest.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import com.epam.springTest.domain.PatientCard;
 
-@Repository("patientCardDao")
 public class PatientCardDaoJDBC implements PatientCardDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	public PatientCardDaoJDBC(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
@@ -45,11 +42,14 @@ public class PatientCardDaoJDBC implements PatientCardDao {
 	}
 
 	public PatientCard getById(Integer id) {
-		PatientCard card = jdbcTemplate
-				.queryForObject(
-						"select patientCardId, firstName, lastName, patronymic, dateOfBirth from PatientCard where patientCardId = ?",
-						new PatientCardMapper(), id);
-		return card;
+		try {
+			return jdbcTemplate
+					.queryForObject(
+							"select patientCardId, firstName, lastName, patronymic, dateOfBirth from PatientCard where patientCardId = ?",
+							new PatientCardMapper(), id);
+		} catch (DataAccessException e) {
+			return null;
+		}
 	}
 
 	private static class PatientCardMapper implements RowMapper<PatientCard> {

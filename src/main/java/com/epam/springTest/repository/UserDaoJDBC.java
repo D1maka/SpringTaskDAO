@@ -3,19 +3,16 @@ package com.epam.springTest.repository;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
-import org.springframework.stereotype.Repository;
 
 import com.epam.springTest.domain.User;
 
-@Repository("userDao")
 public class UserDaoJDBC implements UserDao {
 
 	private JdbcTemplate jdbcTemplate;
 
-	@Autowired
 	public UserDaoJDBC(JdbcTemplate jdbcTemplate) {
 		this.jdbcTemplate = jdbcTemplate;
 	}
@@ -44,11 +41,14 @@ public class UserDaoJDBC implements UserDao {
 	}
 
 	public User getById(Integer id) {
-		User user = jdbcTemplate
+		try {
+			return jdbcTemplate
 				.queryForObject(
 						"select userId, firstName, lastName, patronymic, userTypeId from User where userId = ?",
 						new UserMapper(), id);
-		return user;
+		} catch(DataAccessException e) {
+			return null;
+		}
 	}
 
 	private static class UserMapper implements RowMapper<User> {

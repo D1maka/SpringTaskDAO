@@ -7,9 +7,18 @@ CREATE TABLE User(
 );
 
 CREATE TABLE PatientCard(
-	patientCardOd IDENTITY,
+	patientCardId IDENTITY,
 	firstName varchar(30),
 	lastName varchar(30), 
 	patronymic varchar(30), 
 	dateOfBirth date
-)
+);
+
+CREATE TABLE PatientHistory(
+	patientHistoryId IDENTITY,
+	patientCardId int,
+	doctorId int, 
+	diagnosisName varchar(30), 
+	diagnosisComment varchar(90), 
+	diagnosisDate date
+);
