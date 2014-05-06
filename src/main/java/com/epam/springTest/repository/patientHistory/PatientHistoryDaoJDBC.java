@@ -23,7 +23,7 @@ public class PatientHistoryDaoJDBC implements PatientHistoryDao {
 	public boolean create(PatientHistory history) {
 		int queryResult = jdbcTemplate
 				.update("insert into PatientHistory(patientCardId, doctorId, diagnosisName, diagnosisDate, diagnosisComment) values(?, ?, ?, ?, ?)",
-						history.getPatientCardId(), history.getDoctorId(),
+						history.getPatientCard().getPatientCardId(), history.getDoctor().getUserId(),
 						history.getDiagnosisName(), history.getDiagnosisDate(),
 						history.getDiagnosisComment());
 		return queryResult > 0;
@@ -32,7 +32,7 @@ public class PatientHistoryDaoJDBC implements PatientHistoryDao {
 	public boolean update(PatientHistory history) {
 		int queryResult = jdbcTemplate
 				.update("update PatientHistory set patientCardId = ?, doctorId = ?, diagnosisName = ?, diagnosisDate = ?, diagnosisComment = ? where patientHistoryId = ?",
-						history.getPatientCardId(), history.getDoctorId(),
+						history.getPatientCard().getPatientCardId(), history.getDoctor().getUserId(),
 						history.getDiagnosisName(), history.getDiagnosisDate(),
 						history.getDiagnosisComment(),
 						history.getPatientHistoryId());
@@ -74,8 +74,10 @@ public class PatientHistoryDaoJDBC implements PatientHistoryDao {
 				throws SQLException {
 			PatientHistory history = new PatientHistory();
 			history.setPatientHistoryId(rs.getInt("patientHistoryId"));
-			history.setPatientCardId(rs.getInt("patientCardId"));
-			history.setDoctorId(rs.getInt("doctorId"));
+//			history.setPatientCard(rs.getInt("patientCardId"));
+//			history.setDoctor(rs.getInt("doctorId"));
+			history.setPatientCard(null);
+			history.setDoctor(null);
 			history.setDiagnosisName(rs.getString("diagnosisName"));
 			history.setDiagnosisDate(rs.getDate("diagnosisDate"));
 			history.setDiagnosisComment(rs.getString("diagnosisComment"));

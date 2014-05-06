@@ -7,4 +7,5 @@ public interface PatientCardDao {
 	public boolean update(PatientCard card);
 	public boolean delete(PatientCard card);
 	public PatientCard getById(Integer id);
+	public PatientCard getByPatientHistoryId(Integer patientHistoryId);
 }

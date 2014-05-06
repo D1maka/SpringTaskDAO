@@ -4,17 +4,41 @@ import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.context.support.FileSystemXmlApplicationContext;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.epam.springTest.domain.user.User;
+import com.epam.springTest.domain.userType.UserType;
 import com.epam.springTest.repository.DaoTestTemplate;
 import com.epam.springTest.repository.user.UserDao;
 
 
 public class UserDaoJDBCTest extends DaoTestTemplate {
-		
+
 	@Autowired
 	private UserDao userDao;
+
+	public JdbcTemplate getJdbcTemplate() {
+		return jdbcTemplate;
+	}
+
+	public void setJdbcTemplate(JdbcTemplate jdbcTemplate) {
+		this.jdbcTemplate = jdbcTemplate;
+	}
+
+	public UserDao getUserDao() {
+		return userDao;
+	}
+
+	public void setUserDao(UserDao userDao) {
+		this.userDao = userDao;
+	}
 
 	@Before
 	public void setUp() throws Exception {
@@ -28,7 +52,7 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);
+		user.setUserType(UserType.ADMIN);
 		
 		boolean actualResult = userDao.create(user);
 		
@@ -41,7 +65,7 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);
+		user.setUserType(UserType.ADMIN);
 		
 		userDao.create(user);
 		int correctId = 1;
@@ -56,7 +80,7 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);
+		user.setUserType(UserType.ADMIN);
 		
 		userDao.create(user);
 		int uncorrectId = 2;
@@ -71,7 +95,7 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);	
+		user.setUserType(UserType.ADMIN);	
 		user.setUserId(1);
 		userDao.create(user);
 		
@@ -85,7 +109,7 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);	
+		user.setUserType(UserType.ADMIN);	
 		user.setUserId(1);
 		
 		boolean result = userDao.delete(user);
@@ -98,13 +122,13 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);		
+		user.setUserType(UserType.ADMIN);		
 		userDao.create(user);
 		User newUser = new User();
 		newUser.setFirstName("test1");
 		newUser.setLastName("test1");
 		newUser.setPatronymic("test1");
-		newUser.setUserTypeId(1);
+		newUser.setUserType(UserType.ADMIN);
 		newUser.setUserId(1);
 		
 		boolean result = userDao.update(newUser);
@@ -118,13 +142,13 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 		user.setFirstName("test");
 		user.setLastName("test");
 		user.setPatronymic("test");
-		user.setUserTypeId(1);		
+		user.setUserType(UserType.ADMIN);		
 		userDao.create(user);
 		User newUser = new User();
 		newUser.setFirstName("test1");
 		newUser.setLastName("test1");
 		newUser.setPatronymic("test1");
-		newUser.setUserTypeId(1);
+		newUser.setUserType(UserType.ADMIN);
 		newUser.setUserId(2);
 		
 		boolean result = userDao.update(newUser);

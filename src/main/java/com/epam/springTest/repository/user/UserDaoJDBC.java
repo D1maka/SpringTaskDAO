@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 
 import com.epam.springTest.domain.user.User;
+import com.epam.springTest.domain.userType.UserType;
 
 public class UserDaoJDBC implements UserDao {
 
@@ -20,17 +21,18 @@ public class UserDaoJDBC implements UserDao {
 	public boolean create(User user) {
 		int queryResult = jdbcTemplate
 				.update("insert into User(firstName, lastName, patronymic, userTypeId) values(?, ?, ?, ?)",
-						user.getFirstName(), user.getLastName(),
-						user.getPatronymic(), user.getUserTypeId());
+						user.getFirstName(), user.getLastName(), user
+								.getPatronymic(), user.getUserType()
+								.getUserTypeId());
 		return queryResult > 0;
 	}
 
 	public boolean update(User user) {
 		int queryResult = jdbcTemplate
 				.update("update User set firstName = ?, lastName = ?, patronymic = ?, userTypeId = ? where userId = ?",
-						user.getFirstName(), user.getLastName(),
-						user.getPatronymic(), user.getUserTypeId(),
-						user.getUserId());
+						user.getFirstName(), user.getLastName(), user
+								.getPatronymic(), user.getUserType()
+								.getUserTypeId(), user.getUserId());
 		return queryResult > 0;
 	}
 
@@ -43,10 +45,21 @@ public class UserDaoJDBC implements UserDao {
 	public User getById(Integer id) {
 		try {
 			return jdbcTemplate
-				.queryForObject(
-						"select userId, firstName, lastName, patronymic, userTypeId from User where userId = ?",
-						new UserMapper(), id);
-		} catch(DataAccessException e) {
+					.queryForObject(
+							"select userId, firstName, lastName, patronymic, userTypeId from User where userId = ?",
+							new UserMapper(), id);
+		} catch (DataAccessException e) {
+			return null;
+		}
+	}
+
+	public User getDoctorByPatientHistoryId(Integer patientHistoryId) {
+		try {
+			return jdbcTemplate
+					.queryForObject(
+							"select userId, firstName, lastName, patronymic, userTypeId from User join PatientHistory on userId = doctorId where patientHistoryId = ?",
+							new UserMapper(), patientHistoryId);
+		} catch (DataAccessException e) {
 			return null;
 		}
 	}
@@ -59,7 +72,9 @@ public class UserDaoJDBC implements UserDao {
 			user.setFirstName(rs.getString("firstName"));
 			user.setLastName(rs.getString("lastName"));
 			user.setPatronymic(rs.getString("patronymic"));
-			user.setUserTypeId(rs.getInt("userTypeId"));
+			int userTypeId = rs.getInt("userTypeId");
+			user.setUserType(UserType.values()[userTypeId]);
+
 			return user;
 		}
 	}

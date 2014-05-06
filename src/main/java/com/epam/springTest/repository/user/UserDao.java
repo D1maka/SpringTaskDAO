@@ -7,4 +7,5 @@ public interface UserDao {
 	public boolean update(User user);
 	public boolean delete(User user);
 	public User getById(Integer id);
+	public User getDoctorByPatientHistoryId(Integer patientHistoryId);
 }

@@ -2,41 +2,42 @@ package com.epam.springTest.domain.patientHistory;
 
 import java.util.Date;
 
+import com.epam.springTest.domain.patientCard.PatientCard;
+import com.epam.springTest.domain.user.User;
+
 public class PatientHistory {
-	private int patientHistoryId;
-	private int patientCardId;
-	private int doctorId;
+	private Integer patientHistoryId;
+	private PatientCard patientCard;
+	private User doctor;
 	private String diagnosisName;
 	private String diagnosisComment;
 	private Date diagnosisDate;
 
 	public PatientHistory() {
-		super();
-		// TODO Auto-generated constructor stub
 	}
 
-	public int getPatientHistoryId() {
+	public Integer getPatientHistoryId() {
 		return patientHistoryId;
 	}
 
-	public void setPatientHistoryId(int patientHistoryId) {
+	public void setPatientHistoryId(Integer patientHistoryId) {
 		this.patientHistoryId = patientHistoryId;
 	}
 
-	public int getPatientCardId() {
-		return patientCardId;
+	public PatientCard getPatientCard() {
+		return patientCard;
 	}
 
-	public void setPatientCardId(int patientCardId) {
-		this.patientCardId = patientCardId;
+	public void setPatientCard(PatientCard patientCard) {
+		this.patientCard = patientCard;
 	}
 
-	public int getDoctorId() {
-		return doctorId;
+	public User getDoctor() {
+		return doctor;
 	}
 
-	public void setDoctorId(int doctorId) {
-		this.doctorId = doctorId;
+	public void setDoctor(User doctor) {
+		this.doctor = doctor;
 	}
 
 	public String getDiagnosisName() {
@@ -74,9 +75,12 @@ public class PatientHistory {
 				+ ((diagnosisDate == null) ? 0 : diagnosisDate.hashCode());
 		result = prime * result
 				+ ((diagnosisName == null) ? 0 : diagnosisName.hashCode());
-		result = prime * result + doctorId;
-		result = prime * result + patientCardId;
-		result = prime * result + patientHistoryId;
+		result = prime * result + ((doctor == null) ? 0 : doctor.hashCode());
+		result = prime * result
+				+ ((patientCard == null) ? 0 : patientCard.hashCode());
+		result = prime
+				* result
+				+ ((patientHistoryId == null) ? 0 : patientHistoryId.hashCode());
 		return result;
 	}
 
@@ -104,11 +108,20 @@ public class PatientHistory {
 				return false;
 		} else if (!diagnosisName.equals(other.diagnosisName))
 			return false;
-		if (doctorId != other.doctorId)
+		if (doctor == null) {
+			if (other.doctor != null)
+				return false;
+		} else if (!doctor.equals(other.doctor))
 			return false;
-		if (patientCardId != other.patientCardId)
+		if (patientCard == null) {
+			if (other.patientCard != null)
+				return false;
+		} else if (!patientCard.equals(other.patientCard))
 			return false;
-		if (patientHistoryId != other.patientHistoryId)
+		if (patientHistoryId == null) {
+			if (other.patientHistoryId != null)
+				return false;
+		} else if (!patientHistoryId.equals(other.patientHistoryId))
 			return false;
 		return true;
 	}
@@ -116,9 +129,12 @@ public class PatientHistory {
 	@Override
 	public String toString() {
 		return "PatientHistory [patientHistoryId=" + patientHistoryId
-				+ ", patientCardId=" + patientCardId + ", doctorId=" + doctorId
+				+ ", patientCard=" + patientCard + ", doctor=" + doctor
 				+ ", diagnosisName=" + diagnosisName + ", diagnosisComment="
 				+ diagnosisComment + ", diagnosisDate=" + diagnosisDate + "]";
 	}
+
+	
+	
 
 }

@@ -51,6 +51,18 @@ public class PatientCardDaoJDBC implements PatientCardDao {
 			return null;
 		}
 	}
+	
+
+	public PatientCard getByPatientHistoryId(Integer patientHistoryId) {
+		try {
+			return jdbcTemplate
+					.queryForObject(
+							"select patientCardId, firstName, lastName, patronymic, dateOfBirth from PatientCard pc join PatientHistory ph on pc.patientCardId = ph.patientCardId where patientHistoryId = ?",
+							new PatientCardMapper(), patientHistoryId);
+		} catch (DataAccessException e) {
+			return null;
+		}
+	}
 
 	private static class PatientCardMapper implements RowMapper<PatientCard> {
 

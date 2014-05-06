@@ -15,6 +15,11 @@ http://www.springframework.org/schema/jdbc http://www.springframework.org/schema
    <bean id="patientCardDao" class="com.epam.springTest.repository.patientCard.PatientCardDaoJDBC" autowire="constructor" />
    
    <bean id="patientHistoryDao" class="com.epam.springTest.repository.patientHistory.PatientHistoryDaoJDBC" autowire="constructor" />
+   
+   <bean id="userDaoJDBCTest" class="com.epam.springTest.repository.user.UserDaoJDBCTest">
+   	<property name="jdbcTemplate" ref="jdbcTemplate" />
+   	<property name="userDao" ref="userDao" />
+   </bean>
     
     <jdbc:embedded-database id="dataSource" type="HSQL">
         <jdbc:script location="classpath:schema.sql"/>

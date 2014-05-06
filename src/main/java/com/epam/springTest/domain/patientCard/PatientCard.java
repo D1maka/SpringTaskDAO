@@ -3,7 +3,7 @@ package com.epam.springTest.domain.patientCard;
 import java.util.Date;
 
 public class PatientCard {
-	private int patientCardId;
+	private Integer patientCardId;
 	private String firstName;
 	private String lastName;
 	private String patronymic;
@@ -18,7 +18,7 @@ public class PatientCard {
 		return patientCardId;
 	}
 
-	public void setPatientCardId(int patientCardId) {
+	public void setPatientCardId(Integer patientCardId) {
 		this.patientCardId = patientCardId;
 	}
 

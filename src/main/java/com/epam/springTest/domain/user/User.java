@@ -1,42 +1,53 @@
 package com.epam.springTest.domain.user;
 
+import com.epam.springTest.domain.userType.UserType;
+
 public class User {
-	private int userId;
-	private int userTypeId;
+	private Integer userId;
+	private UserType userType;
 	private String firstName;
 	private String lastName;
 	private String patronymic;
 
 	public User() {
-	}	
+	}
 
-	public int getUserId() {
+	public Integer getUserId() {
 		return userId;
 	}
-	public void setUserId(int userId) {
+
+	public void setUserId(Integer userId) {
 		this.userId = userId;
 	}
-	public int getUserTypeId() {
-		return userTypeId;
+
+	public UserType getUserType() {
+		return userType;
 	}
-	public void setUserTypeId(int userTypeId) {
-		this.userTypeId = userTypeId;
+
+	public void setUserType(UserType userType) {
+		this.userType = userType;
 	}
+
 	public String getFirstName() {
 		return firstName;
 	}
+
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
 	}
+
 	public String getLastName() {
 		return lastName;
 	}
+
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
 	}
+
 	public String getPatronymic() {
 		return patronymic;
 	}
+
 	public void setPatronymic(String patronymic) {
 		this.patronymic = patronymic;
 	}
@@ -51,8 +62,9 @@ public class User {
 				+ ((lastName == null) ? 0 : lastName.hashCode());
 		result = prime * result
 				+ ((patronymic == null) ? 0 : patronymic.hashCode());
-		result = prime * result + userId;
-		result = prime * result + userTypeId;
+		result = prime * result + ((userId == null) ? 0 : userId.hashCode());
+		result = prime * result
+				+ ((userType == null) ? 0 : userType.hashCode());
 		return result;
 	}
 
@@ -80,17 +92,21 @@ public class User {
 				return false;
 		} else if (!patronymic.equals(other.patronymic))
 			return false;
-		if (userId != other.userId)
+		if (userId == null) {
+			if (other.userId != null)
+				return false;
+		} else if (!userId.equals(other.userId))
 			return false;
-		if (userTypeId != other.userTypeId)
+		if (userType != other.userType)
 			return false;
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "User [userId=" + userId + ", userTypeId=" + userTypeId
+		return "User [userId=" + userId + ", userTypeId=" + userType
 				+ ", firstName=" + firstName + ", lastName=" + lastName
 				+ ", patronymic=" + patronymic + "]";
 	}
+	
 }

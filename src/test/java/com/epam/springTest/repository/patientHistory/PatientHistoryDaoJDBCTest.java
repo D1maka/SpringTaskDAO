@@ -9,7 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.epam.springTest.domain.patientCard.PatientCard;
 import com.epam.springTest.domain.patientHistory.PatientHistory;
+import com.epam.springTest.domain.user.User;
 import com.epam.springTest.repository.DaoTestTemplate;
 import com.epam.springTest.repository.patientHistory.PatientHistoryDao;
 
@@ -27,8 +29,12 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void addUserToDbSuccessful() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");
@@ -41,8 +47,12 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void selectUserByCorrectIdSuccess() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");
@@ -57,8 +67,12 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void selectUserByUncorrectIdFail() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");
@@ -73,8 +87,12 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void deleteInsertedUserSuccess() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");
@@ -88,8 +106,12 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void deleteNotExistingUserFail() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");
@@ -102,18 +124,22 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void updateUserToDbSuccessful() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");		
 		patientHistoryDao.create(history);
 		PatientHistory newHistory = new PatientHistory();
-		newHistory.setPatientCardId(1);
-		newHistory.setDoctorId(1);
-		newHistory.setDiagnosisName("test");
+		newHistory.setPatientCard(patientCard);
+		newHistory.setDoctor(doctor);
+		newHistory.setDiagnosisName("test1");
 		newHistory.setDiagnosisDate(new Date());
-		newHistory.setDiagnosisComment("test");
+		newHistory.setDiagnosisComment("test1");
 		newHistory.setPatientHistoryId(1);
 		
 		boolean result = patientHistoryDao.update(newHistory);
@@ -124,15 +150,19 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	@Test
 	public void updateUserWithWrongIdFail() {
 		PatientHistory history = new PatientHistory();
-		history.setPatientCardId(1);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");		
 		patientHistoryDao.create(history);
 		PatientHistory newHistory = new PatientHistory();
-		newHistory.setPatientCardId(1);
-		newHistory.setDoctorId(1);
+		newHistory.setPatientCard(patientCard);
+		newHistory.setDoctor(doctor);
 		newHistory.setDiagnosisName("test");
 		newHistory.setDiagnosisDate(new Date());
 		newHistory.setDiagnosisComment("test");
@@ -147,31 +177,43 @@ public class PatientHistoryDaoJDBCTest extends DaoTestTemplate{
 	public void getPatientHistoryCorrectPatientIdSuccess() {
 		PatientHistory history = new PatientHistory();
 		int correctPatientId = 1;
-		history.setPatientCardId(correctPatientId);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");		
 		patientHistoryDao.create(history);
+		history.setPatientCard(null);
+		history.setDoctor(null);
 		
 		List<PatientHistory> histories = patientHistoryDao.getPatientHistory(correctPatientId);
 		
-		assertEquals(histories.get(0), history);
+		assertNotNull(histories);
 	}
 	
 	@Test
 	public void getPatientHistoryNotCorrectPatientIdFail() {
 		PatientHistory history = new PatientHistory();
 		int notCorrectPatientId = 2;
-		history.setPatientCardId(notCorrectPatientId);
-		history.setDoctorId(1);
+		PatientCard patientCard = new PatientCard();
+		patientCard.setPatientCardId(1);
+		history.setPatientCard(patientCard);
+		User doctor = new User();
+		doctor.setUserId(1);
+		history.setDoctor(doctor);
 		history.setDiagnosisName("test");
 		history.setDiagnosisDate(new Date());
 		history.setDiagnosisComment("test");		
 		patientHistoryDao.create(history);
 		
 		List<PatientHistory> histories = patientHistoryDao.getPatientHistory(notCorrectPatientId);
+		int expectedSize = 0;
+		boolean expectedResult = histories.size() == expectedSize;
 		
-		assertNotEquals(histories.get(0), history);
+		assertTrue(expectedResult);
 	}
 }
