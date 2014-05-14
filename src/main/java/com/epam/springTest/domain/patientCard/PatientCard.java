@@ -1,12 +1,26 @@
 package com.epam.springTest.domain.patientCard;
 
 import java.util.Date;
+import javax.persistence.*;
 
+@Entity
+@Table(name = "PatientCard")
 public class PatientCard {
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Integer patientCardId;
+	
+	@Column(name="firstname")
 	private String firstName;
+	
+	@Column(name="lastname")
 	private String lastName;
+	
+	@Column(name="patronymic")
 	private String patronymic;
+	
+	@Column(name="dateofbirth")
+	@Temporal(TemporalType.DATE)
 	private Date dateOfBirth;
 
 	public PatientCard() {

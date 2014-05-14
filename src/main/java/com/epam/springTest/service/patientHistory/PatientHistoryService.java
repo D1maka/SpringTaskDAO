@@ -6,4 +6,5 @@ import com.epam.springTest.domain.patientHistory.PatientHistory;
 
 public interface PatientHistoryService {
 	List<PatientHistory> getPatientHistory(Integer patientId);
+	PatientHistory getById(Integer patientHistoryId);
 }

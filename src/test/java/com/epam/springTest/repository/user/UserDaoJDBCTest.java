@@ -19,9 +19,12 @@ import com.epam.springTest.repository.DaoTestTemplate;
 import com.epam.springTest.repository.user.UserDao;
 
 
-public class UserDaoJDBCTest extends DaoTestTemplate {
-
-	@Autowired
+//@RunWith(SpringJUnit4ClassRunner.class)
+//@ContextConfiguration(locations = {"/persistenceContextTests.xml"})
+//public class UserDaoJDBCTest extends DaoTestTemplate {
+public class UserDaoJDBCTest{
+	private JdbcTemplate jdbcTemplate;
+//	@Autowired
 	private UserDao userDao;
 
 	public JdbcTemplate getJdbcTemplate() {
@@ -42,6 +45,9 @@ public class UserDaoJDBCTest extends DaoTestTemplate {
 
 	@Before
 	public void setUp() throws Exception {
+		ApplicationContext context = new FileSystemXmlApplicationContext("/src/test/resources/persistenceContextTests.xml");
+		jdbcTemplate = context.getBean(JdbcTemplate.class);
+		userDao = context.getBean(UserDao.class);
 		jdbcTemplate.execute("truncate table User");
 		jdbcTemplate.execute("ALTER TABLE User ALTER COLUMN userId RESTART WITH 1");
 	}

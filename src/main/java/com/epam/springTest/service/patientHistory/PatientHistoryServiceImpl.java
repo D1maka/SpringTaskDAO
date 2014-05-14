@@ -12,6 +12,8 @@ import com.epam.springTest.repository.user.UserDao;
 
 public class PatientHistoryServiceImpl implements PatientHistoryService {
 	
+	
+
 	private PatientCardDao patientCardDao;
 	private UserDao userDao;
 	private PatientHistoryDao patientHistoryDao;
@@ -29,7 +31,14 @@ public class PatientHistoryServiceImpl implements PatientHistoryService {
 			history.setDoctor(doctor);		
 			history.setPatientCard(patientCard);
 		}
-		return null;
+		return histories;
+	}
+	
+	public PatientHistory getById(Integer patientHistoryId) {
+		PatientHistory history = patientHistoryDao.getById(patientHistoryId);
+		history.setDoctor(userDao.getDoctorByPatientHistoryId(patientHistoryId));
+		history.setPatientCard(patientCardDao.getByPatientHistoryId(patientHistoryId));
+		return history;
 	}
 
 	public void setPatientCardDao(PatientCardDao patientCardDao) {
